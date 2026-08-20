@@ -65,4 +65,18 @@
 - ArangoDB: 273.81 ops/sec
 - FalkorDB: 556.89 ops/sec
 - Ranking under concurrency matches the general pattern seen across all other benchmarks (FalkorDB/ArangoDB fastest, CognoDB slowest) — consistent with instance tier size and architecture differences rather than any one-off anomaly
-- Test writes used a dedicated ID range (>=1,000,000) with non-overlapping per-thread sub-ranges, and were deleted after each platform's run to avoid polluting the benchmark dataset for other tests
+- Test writes used a dedicated ID range (>=1,000,000) with non-overlapping per-thread sub-ranges, and were deleted after each platform's run to avoid polluting the benchmark dataset for other 
+
+## Memgraph footprint anomaly
+- Memgraph reports Disk Used: 14 GB despite the dataset being ~200MB on comparable platforms (e.g. CognoDB's 204MB storage for the identical dataset). Likely explained by write-ahead log (WAL) files, periodic snapshots, or storage engine pre-allocation rather than actual graph data size. Flagged here rather than treated as a data-loading error, since node/relationship counts matched expectations (20,000/160,000) on verification.
+
+## Neo4j AuraDB Free footprint
+- Node capacity: 200,000 (derived from "20,000 (10%)" shown in console)
+- Relationship capacity: 400,000 (derived from "160,000 (40%)" shown in console)
+- Live storage/CPU/memory metrics: not observable on Free tier — console explicitly states "Upgrade to Professional for metrics"
+- No RAM/vCPU spec publicly listed in the console UI itself (Aura Free's exact compute allocation isn't shown, unlike CognoDB/Memgraph/ArangoDB)
+
+## FalkorDB footprint
+- Official Free tier spec (from pricing page): 100 MB RAM, 100 MB max graph dataset
+- No live usage metrics observable via console UI (checked Instance Details, Connectivity, Nodes, User Access, Audit Logs, Import/Export — none expose resource usage)
+- Notable finding: our dataset (20,000 nodes + 160,000 relationships) ran successfully and was the fastest platform overall, despite the official spec suggesting a 100MB ceiling — worth flagging as a genuine anomaly for the analysis section (either the limit isn't strictly enforced, or FalkorDB's in-memory compression is highly effective)
