@@ -23,3 +23,11 @@
 ## Memgraph Cloud (ingest results)
 - Ingest: 20,000 nodes @ 1582.6 nodes/sec, 160,000 relationships @ 1660.1 rels/sec, total 109.02s
 - Slower than Neo4j Aura despite larger instance size (2GB/2CPU vs Aura's smaller free tier) — possibly network latency to Frankfurt region, or Memgraph's durability/persistence settings; worth investigating in final analysis
+
+## ArangoDB
+- Deployed via ArangoDB Oasis, AWS Asia Pacific (Mumbai) region
+- Free trial expires in 14 days (same trial-based model as Memgraph Cloud — neither CognoDB nor Neo4j Aura Free have an expiry)
+
+## ArangoDB (ingest results)
+- Ingest: 20,000 nodes @ 11916.2 nodes/sec, 160,000 relationships @ 8076.4 rels/sec, total 21.49s
+- By far the fastest ingest of all platforms tested so far — likely due to document-batch insert_many() being more efficient than Cypher UNWIND transactions, and/or AWS Mumbai region proximity reducing latency
