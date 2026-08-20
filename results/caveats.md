@@ -31,3 +31,9 @@
 ## ArangoDB (ingest results)
 - Ingest: 20,000 nodes @ 11916.2 nodes/sec, 160,000 relationships @ 8076.4 rels/sec, total 21.49s
 - By far the fastest ingest of all platforms tested so far — likely due to document-batch insert_many() being more efficient than Cypher UNWIND transactions, and/or AWS Mumbai region proximity reducing latency
+
+## FalkorDB Cloud (ingest results)
+- Ingest: 20,000 nodes @ 19971.7 nodes/sec, 160,000 relationships @ 7979.0 rels/sec, total 21.05s
+- Fastest node ingest of all 5 platforms tested
+- No connection or TLS issues; self-selected password (not provider-generated)
+- Redis-based architecture, Cypher-like query syntax via FalkorDB Python client (not the neo4j driver)
