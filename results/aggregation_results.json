@@ -1,0 +1,52 @@
+{
+  "cognodb": {
+    "count": {
+      "p50_ms": 273.17,
+      "p95_ms": 277.96
+    },
+    "avg_out_degree": {
+      "p50_ms": 2205.0,
+      "p95_ms": 2425.21
+    }
+  },
+  "neo4j": {
+    "count": {
+      "p50_ms": 85.64,
+      "p95_ms": 89.62
+    },
+    "avg_out_degree": {
+      "p50_ms": 217.32,
+      "p95_ms": 354.86
+    }
+  },
+  "memgraph": {
+    "count": {
+      "p50_ms": 162.36,
+      "p95_ms": 164.11
+    },
+    "avg_out_degree": {
+      "p50_ms": 399.1,
+      "p95_ms": 450.97
+    }
+  },
+  "arangodb": {
+    "count": {
+      "p50_ms": 39.17,
+      "p95_ms": 63.95
+    },
+    "avg_out_degree": {
+      "p50_ms": 1451.4,
+      "p95_ms": 1894.95
+    }
+  },
+  "falkordb": {
+    "count": {
+      "p50_ms": 35.42,
+      "p95_ms": 36.33
+    },
+    "avg_out_degree": {
+      "p50_ms": 298.46,
+      "p95_ms": 340.15
+    }
+  }
+}

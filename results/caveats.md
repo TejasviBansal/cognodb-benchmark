@@ -49,3 +49,11 @@
 ## Lookup results observations
 - Indexed (id) vs unindexed (name prefix) lookup gap is visible on every platform, most pronounced on CognoDB: p95 goes from 282ms (indexed) to 564ms (unindexed) — a ~2x degradation from the missing index on `name`
 - Only `id` was indexed on all 5 platforms (created in each loader script); `name` was left unindexed deliberately to produce this comparison
+
+## Aggregation results observations
+- Simple count queries are fast and fairly close across platforms (35-273ms range)
+- Row-returning aggregation (avg out-degree, 20,000 rows returned) shows much wider divergence:
+  - CognoDB: 273ms -> 2205ms p50 (~8x slower) — likely smallest instance tier + result serialization/network cost compounding
+  - ArangoDB: 39ms -> 1451ms p50 (~37x slower) — larger relative jump than other platforms, worth further investigation; possibly the nested FOR subquery pattern used for AQL degree calculation is less optimized than Cypher's OPTIONAL MATCH
+  - Neo4j and FalkorDB scaled best proportionally (~2.5x and ~8.4x respectively, but starting from a much lower base)
+- This suggests result-set size matters more for some platforms than others — worth highlighting as a key finding in the analysis section
