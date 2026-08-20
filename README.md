@@ -6,6 +6,17 @@ This benchmark was built for the Wexa AI Backend Engineer take-home assignment. 
 
 ---
 
+## TL;DR
+
+- **FalkorDB (Redis-based) and ArangoDB (document-native, AQL) were consistently the fastest platforms** across every benchmark category — ingest, traversals, lookups, aggregations, and concurrent throughput. Both were also hosted closest to the benchmarking client (Mumbai region), so region and architecture are confounded in these results and cannot be fully separated (see Analysis).
+- **CognoDB was the slowest or near-slowest on every metric**, consistent with it having the smallest compute tier tested (0.5 vCPU burstable, 512MB RAM) and the most distant region (us-east4). This is an expected, fair result given its spec, not a flaw.
+- **The single most interesting finding**: result-set size, not query type, is the strongest differentiator between platforms. A query returning one row (count) performs similarly everywhere; a query returning 20,000 rows (avg out-degree) causes some platforms to slow down 2.5x and others to slow down 37x. See [Aggregations](#4-aggregations-count--avg-out-degree).
+- **Missing an index has a real, measurable cost**, most visible on the smallest instance (CognoDB): p95 latency nearly doubles (282ms → 564ms) between an indexed point lookup and an unindexed filtered lookup.
+- **Three genuine open anomalies were found and are reported without a confirmed root cause**: Memgraph reports 14GB disk usage for a ~200MB dataset; ArangoDB shows an unexplained p95 latency spike specifically on 3-hop traversals; FalkorDB's official 100MB tier spec did not appear to constrain a dataset several times that size. All three are flagged in [Anomalies and honest caveats](#anomalies-and-honest-caveats) rather than smoothed over.
+- **Full results, methodology, and reproduction steps follow below** — this summary omits detail in favor of the headline findings; every number is broken out by platform and metric further down.
+
+---
+
 ## Platforms tested
 
 | Platform | Query Language | Client Driver | Hosting Model |
