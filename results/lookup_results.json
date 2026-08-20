@@ -1,0 +1,52 @@
+{
+  "cognodb": {
+    "point_lookup": {
+      "p50_ms": 281.12,
+      "p95_ms": 282.54
+    },
+    "filtered_lookup": {
+      "p50_ms": 309.92,
+      "p95_ms": 563.63
+    }
+  },
+  "neo4j": {
+    "point_lookup": {
+      "p50_ms": 85.81,
+      "p95_ms": 88.69
+    },
+    "filtered_lookup": {
+      "p50_ms": 99.36,
+      "p95_ms": 128.45
+    }
+  },
+  "memgraph": {
+    "point_lookup": {
+      "p50_ms": 160.85,
+      "p95_ms": 176.27
+    },
+    "filtered_lookup": {
+      "p50_ms": 173.45,
+      "p95_ms": 190.26
+    }
+  },
+  "arangodb": {
+    "point_lookup": {
+      "p50_ms": 37.26,
+      "p95_ms": 99.46
+    },
+    "filtered_lookup": {
+      "p50_ms": 42.23,
+      "p95_ms": 98.94
+    }
+  },
+  "falkordb": {
+    "point_lookup": {
+      "p50_ms": 36.69,
+      "p95_ms": 37.71
+    },
+    "filtered_lookup": {
+      "p50_ms": 41.66,
+      "p95_ms": 50.78
+    }
+  }
+}

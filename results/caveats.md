@@ -37,3 +37,15 @@
 - Fastest node ingest of all 5 platforms tested
 - No connection or TLS issues; self-selected password (not provider-generated)
 - Redis-based architecture, Cypher-like query syntax via FalkorDB Python client (not the neo4j driver)
+
+## Query language note
+- AQL traversals require an explicit `WITH <collection>` declaration before the FOR loop; Cypher (used by CognoDB/Neo4j/Memgraph/FalkorDB) infers this automatically.
+
+## Traversal results observations
+- CognoDB latency is flat (~277ms) across all hop depths — likely dominated by network/connection overhead rather than actual traversal cost, consistent with it being the most geographically distant/smallest instance
+- ArangoDB shows a p95 spike on 3-hop (360ms vs ~40ms p50) — worth noting as variance, possibly a cold-cache effect on deeper traversals
+- FalkorDB fastest and most consistent across all hop depths (~35ms flat)
+
+## Lookup results observations
+- Indexed (id) vs unindexed (name prefix) lookup gap is visible on every platform, most pronounced on CognoDB: p95 goes from 282ms (indexed) to 564ms (unindexed) — a ~2x degradation from the missing index on `name`
+- Only `id` was indexed on all 5 platforms (created in each loader script); `name` was left unindexed deliberately to produce this comparison
