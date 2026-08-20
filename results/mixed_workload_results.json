@@ -1,0 +1,37 @@
+{
+  "cognodb": {
+    "concurrency": 20,
+    "duration_s": 20.25,
+    "total_ops": 1315,
+    "queries_per_second": 64.95,
+    "read_write_ratio": 0.8
+  },
+  "neo4j": {
+    "concurrency": 20,
+    "duration_s": 20.09,
+    "total_ops": 4359,
+    "queries_per_second": 216.96,
+    "read_write_ratio": 0.8
+  },
+  "memgraph": {
+    "concurrency": 20,
+    "duration_s": 20.15,
+    "total_ops": 2366,
+    "queries_per_second": 117.41,
+    "read_write_ratio": 0.8
+  },
+  "arangodb": {
+    "concurrency": 20,
+    "duration_s": 20.03,
+    "total_ops": 5484,
+    "queries_per_second": 273.81,
+    "read_write_ratio": 0.8
+  },
+  "falkordb": {
+    "concurrency": 20,
+    "duration_s": 20.03,
+    "total_ops": 11154,
+    "queries_per_second": 556.89,
+    "read_write_ratio": 0.8
+  }
+}

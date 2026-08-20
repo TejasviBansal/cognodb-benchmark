@@ -57,3 +57,12 @@
   - ArangoDB: 39ms -> 1451ms p50 (~37x slower) — larger relative jump than other platforms, worth further investigation; possibly the nested FOR subquery pattern used for AQL degree calculation is less optimized than Cypher's OPTIONAL MATCH
   - Neo4j and FalkorDB scaled best proportionally (~2.5x and ~8.4x respectively, but starting from a much lower base)
 - This suggests result-set size matters more for some platforms than others — worth highlighting as a key finding in the analysis section
+
+## Mixed workload results (20 concurrent clients, 80% read / 20% write, 20s sustained)
+- CognoDB: 64.95 ops/sec
+- Neo4j: 216.96 ops/sec
+- Memgraph: 117.41 ops/sec
+- ArangoDB: 273.81 ops/sec
+- FalkorDB: 556.89 ops/sec
+- Ranking under concurrency matches the general pattern seen across all other benchmarks (FalkorDB/ArangoDB fastest, CognoDB slowest) — consistent with instance tier size and architecture differences rather than any one-off anomaly
+- Test writes used a dedicated ID range (>=1,000,000) with non-overlapping per-thread sub-ranges, and were deleted after each platform's run to avoid polluting the benchmark dataset for other tests
